@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>语音</title>
+    <style>
+        h1,
+        p {
+            font-family: 'arial';
+            color: #3d3d3d;
+            text-align: center;
+        }
+    
+        p {
+            font-size: 8pt;
+            font-style: italic;
+            color: #686868;
+        }
+    
+        #center {
+            margin: 100px auto;
+            width: 600px;
+        }
+    
+        input {
+            font-size: 24pt;
+            margin: 0 auto;
+            width: 100%;
+            color: #3d3d3d;
+        }
+    
+        button {
+            width: 150px;
+            height: 30px;
+            margin: 0 auto;
+            display: block;
+            margin-top: 10px;
+        }
+    
+        #linkage {
+            position: fixed;
+            top: 45px;
+            left: 0px;
+            background-color: #3d3d3d;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 5px;
+            width: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div id="center">
+        <h1>输入文字，点击按钮</h1>
+        <input id="typer" type="text" />
+        <button id="activate">用HTML5念它!</button>
+        <p>This demo is aimed at Chrome but will work on other browsers as they start to support speech synthesis.</p>
+    </div>
+    <script>
+        function sayIt(query, language) {
+            var q = new SpeechSynthesisUtterance(query);
+            q.lang = language;
+            q.rate = 1.2;
+            speechSynthesis.speak(q);
+        }
+
+        function attach(elementId, event, functionName) {
+            var element = document.getElementById(elementId);
+            if (element.addEventListener) {
+                element.addEventListener(event, functionName, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + event, functionName);
+            } else {
+                element['on' + event] = functionName;
+            }
+        }
+
+        function interpret() {
+            sayIt(document.getElementById('typer').value, 'zh-CN');
+        }
+
+        sayIt('你好，张艳', 'zh-CN');
+        attach('activate', 'click', interpret);
+    </script>
+</body>
+</html>
